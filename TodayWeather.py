@@ -54,11 +54,18 @@ try:
     min_dif_ele = re.sub('[\[\]]', '', min_dif_ele)
     min_dif_ele_int = int(min_dif_ele)
 
-    dif_int = max_dif_ele_int + min_dif_ele_int
-    if dif_int > 0:
-        dif_text = '昨日より' + str(dif_int) + '度ほど温かいでしょう'
+    # dif_int = max_dif_ele_int + min_dif_ele_int
+    # if dif_int > 0:
+    #     dif_text = '昨日より' + str(dif_int) + '度ほど温かいでしょう'
+    # else:
+    #     dif_text = '昨日より' + str(dif_int) + '度ほど冷えるでしょう'
+
+    if max_dif_ele_int > 0:
+        dif_text = '昨日より' + str(max_dif_ele_int) + '度ほど温かいでしょう'
+    elif max_dif_ele_int == 0:
+        dif_text = '今日と同じくらいの暖かさでしょう'
     else:
-        dif_text = '昨日より' + str(dif_int) + '度ほど冷えるでしょう'
+        dif_text = '昨日より' + str(max_dif_ele_int) + '度ほど冷えるでしょう'
 
     print(tenki_text)
     # print(rain1_text)

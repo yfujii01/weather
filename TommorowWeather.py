@@ -3,9 +3,14 @@ from selenium.webdriver.chrome.options import Options
 import subprocess
 import re
 
-options = Options()
-options.add_argument('--headless')
-driver = webdriver.Chrome(chrome_options=options)
+# options = Options()
+# options.add_argument('--headless')
+# driver = webdriver.Chrome(chrome_options=options)
+
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+driver = webdriver.Remote(
+command_executor='http://selenium-hub:4444/wd/hub',
+desired_capabilities=DesiredCapabilities.CHROME)
 
 try:
     # Rakuten Infoseek 岡山市北区の天気
@@ -66,6 +71,7 @@ try:
     else:
         dif_text = '今日より' + str(max_dif_ele_int) + '度ほど冷えるでしょう'
 
+    print('ぴんぽん、明日の天気をお知らせします。')
     print(tenki_text)
     # print(rain1_text)
     # print(rain2_text)
@@ -73,16 +79,17 @@ try:
     print(max_text)
     print(min_text)
     print(dif_text)
+    print('以上、明日の天気予報でした')
 
-    subprocess.call(['sh', 'jsay.sh', 'ぴんぽん、明日の天気をお知らせします。'])
-    subprocess.call(['sh', 'jsay.sh', tenki_text])
-    # subprocess.call(['sh', 'jsay.sh', rain1_text])
-    # subprocess.call(['sh', 'jsay.sh', rain2_text])
-    subprocess.call(['sh', 'jsay.sh', rain3_text])
-    subprocess.call(['sh', 'jsay.sh', max_text])
-    subprocess.call(['sh', 'jsay.sh', min_text])
-    subprocess.call(['sh', 'jsay.sh', dif_text])
-    subprocess.call(['sh', 'jsay.sh', '以上、明日の天気予報でした'])
+    # subprocess.call(['sh', 'jsay.sh', 'ぴんぽん、明日の天気をお知らせします。'])
+    # subprocess.call(['sh', 'jsay.sh', tenki_text])
+    # # subprocess.call(['sh', 'jsay.sh', rain1_text])
+    # # subprocess.call(['sh', 'jsay.sh', rain2_text])
+    # subprocess.call(['sh', 'jsay.sh', rain3_text])
+    # subprocess.call(['sh', 'jsay.sh', max_text])
+    # subprocess.call(['sh', 'jsay.sh', min_text])
+    # subprocess.call(['sh', 'jsay.sh', dif_text])
+    # subprocess.call(['sh', 'jsay.sh', '以上、明日の天気予報でした'])
 
 except Exception:
     print('error')

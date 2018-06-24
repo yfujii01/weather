@@ -1,0 +1,25 @@
+selenium-hub:
+  image: selenium/hub
+  container_name: 'selenium-hub'
+  ports:
+    - 4444:4444
+
+chrome:
+  image: selenium/node-chrome-debug
+  container_name: 'chrome'
+  links:
+    - selenium-hub:hub
+  ports:
+    - 5900:5900
+  # volumes:
+  #   - /dev/shm:/dev/shm
+
+python:
+  image: python:3
+  container_name: 'python'
+  links:
+    - selenium-hub:hub
+  command: 'tail -f /dev/null'
+  # working_dir: '/root/'
+  # volumes:
+  #   - ./tests/:/root/tests/

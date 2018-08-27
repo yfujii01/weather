@@ -13,15 +13,17 @@ try:
     driver.get('https://infoseek.tenki.jp/forecast/7/36/6610/33101/')
     tenki_element = driver.find_element_by_css_selector(
         '#main-column > section > div.forecast-days-wrap.clearfix > section.today-weather > div.weather-wrap.clearfix > div.weather-icon > p')
-    tenki_text = '本日の天気は、' + tenki_element.text + ''
+    tenki_text = '本日の天気は、' + tenki_element.text
+
+    tenki_text = tenki_text.replace('雨', 'あめ')
 
     max_element = driver.find_element_by_css_selector(
         '#main-column > section > div.forecast-days-wrap.clearfix > section.today-weather > div.weather-wrap.clearfix > div.date-value-wrap > dl > dd.high-temp.temp > span.value')
-    max_text = '最高気温は、' + max_element.text + '度'
+    max_text = '最高気温は、' + max_element.text + '度。'
 
     min_element = driver.find_element_by_css_selector(
         '#main-column > section > div.forecast-days-wrap.clearfix > section.today-weather > div.weather-wrap.clearfix > div.date-value-wrap > dl > dd.low-temp.temp > span.value')
-    min_text = '最低気温は、' + min_element.text + '度'
+    min_text = '最低気温は、' + min_element.text + '度。'
 
     rain1_element = driver.find_element_by_css_selector(
         '#main-column > section > div.forecast-days-wrap.clearfix > section.today-weather > div.precip-table > table > tbody > tr.rain-probability > td:nth-child(3)')
@@ -67,23 +69,17 @@ try:
     else:
         dif_text = '昨日より' + str(max_dif_ele_int) + '度ほど冷えるでしょう'
 
-    print(tenki_text)
-    # print(rain1_text)
-    # print(rain2_text)
-    print(rain3_text)
-    print(max_text)
-    print(min_text)
-    print(dif_text)
+    talktext = 'ぴんぽん、本日の天気をお知らせします。'
+    talktext += tenki_text + '。'
+    talktext += rain3_text + '。'
+    talktext += max_text + '。'
+    talktext += min_text + '。'
+    talktext += dif_text + '。'
+    talktext += '以上、本日の天気予報でした'
 
-    subprocess.call(['sh', 'jsay.sh', 'ぴんぽん、本日の天気をお知らせします。'])
-    subprocess.call(['sh', 'jsay.sh', tenki_text])
-    # subprocess.call(['sh', 'jsay.sh', rain1_text])
-    # subprocess.call(['sh', 'jsay.sh', rain2_text])
-    subprocess.call(['sh', 'jsay.sh', rain3_text])
-    subprocess.call(['sh', 'jsay.sh', max_text])
-    subprocess.call(['sh', 'jsay.sh', min_text])
-    subprocess.call(['sh', 'jsay.sh', dif_text])
-    subprocess.call(['sh', 'jsay.sh', '以上、本日の天気予報でした'])
+    print(talktext)
+
+    subprocess.call(['sh', 'jsay.sh', talktext])
 
 except Exception:
     print('error')

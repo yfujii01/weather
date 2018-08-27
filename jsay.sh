@@ -1,8 +1,8 @@
 #!/bin/sh
 TMP=/tmp/jsay.wav
 echo "$1" | open_jtalk \
--m /usr/local/Cellar/open-jtalk/1.10_1/voice/mei/mei_normal.htsvoice \
--x /usr/local/Cellar/open-jtalk/1.10_1/dic \
+-m /usr/share/hts-voice/mei/mei_normal.htsvoice \
+-x /var/lib/mecab/dic/open-jtalk/naist-jdic \
 -ow $TMP && \
-afplay $TMP
+aplay --quiet $TMP
 rm -f $TMP
